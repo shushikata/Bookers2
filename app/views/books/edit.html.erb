@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row">
+    <h1>Editing Book</h1>
+
+    <p id="notice">
+    <%= notice %> 
+    </p>
+
+    <% if @book.errors.any? %>
+      <h3 class="error_message">error prohibited this book from being saved:</h3>
+      <br>
+        <p class="error_message">can't be blank</p>
+      </br>
+    <% end %>
+
+    <%= form_for(@book) do |f| %>
+      
+      <div class="text_margin">
+        <label for="booktitle">Title</label><br>
+        <%= f.text_field :title %><br>
+      </div>
+
+      <div class="text_margin">
+        <label for="bookbody">Opinion</label><br>
+        <%= f.text_area :body %><br>
+      </div>
+
+      <div class="text_margin">
+        <%= f.submit 'Update Book', class:"btn btn-primary" %></br>   
+      </div>
+
+      <%= link_to "Show", book_path %> 
+      <%= "|" %>
+      <%= link_to "Back", books_path %>
+    <% end %> 
+  </div>
+</div>
