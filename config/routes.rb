@@ -7,5 +7,9 @@ Rails.application.routes.draw do
  devise_for :users
 
  resources :users, except: [:new, :destroy]
- resources :books, except: [:new]
+
+ resources :books, except: [:new] do
+  resources :comments, only: [:create, :destroy]
+ end
+ 
 end

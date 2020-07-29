@@ -18,6 +18,7 @@
           <th></th>
           <th>Title</th>
           <th>Opinion</th>
+          <th>comments</th>
         </tr>
         <tr> 
           <% @books.each do |book| %>
@@ -32,6 +33,15 @@
               </td>
               <td>
                 <%= book.body %>
+              </td>
+              <td>
+                <div class="float-wrapper">
+                  <%= link_to book_path(book), :style=>"color:#9d9d9d;" do %>
+                    <span class="glyphicon glyphicon-comment" aria-hidden="true" >
+                      <%= book.comments.count %>
+                    </span>
+                  <% end %> 
+                </div>
               </td>
             </tr>
           <% end %>
