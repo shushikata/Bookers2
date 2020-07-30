@@ -9,6 +9,7 @@ Rails.application.routes.draw do
  resources :users, except: [:new, :destroy]
 
  resources :books, except: [:new] do
+  resource :favorites, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
  end
  
