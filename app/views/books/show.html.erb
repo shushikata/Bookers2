@@ -18,10 +18,19 @@
           <td>
             <%= @book.body %>
           </td>
-
+          <td>
+            <%= link_to book_path(@book), :style=>"color:#9d9d9d;" do %>
+              <span class="glyphicon glyphicon-comment" aria-hidden="true" ></span>
+              <%= @book.comments.count %>
+            <% end %>
+          </td>
+          <td>
+            <div class="favorites_buttons_<%= @book.id %>">
+            <%= render 'books/favorite', book: @book %>
+          </td>
           <% if @user.id == current_user.id %>
             <td>
-                <%= link_to "Edit", edit_book_path, class:"btn btn-success" %> 
+              <%= link_to "Edit", edit_book_path, class:"btn btn-success" %> 
             </td>
             <td>
               <%= link_to "Destroy", book_path, class:"btn btn-danger", method: :delete, "data-confirm" => "Are you sure?" %>
