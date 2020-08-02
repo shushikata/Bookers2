@@ -5,6 +5,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.all
+    @books = Book.page(params[:page]).per(6)
     @book = Book.new
     @user = current_user
   end
@@ -17,6 +18,7 @@ class BooksController < ApplicationController
       redirect_to book_path(@book)
     else 
       @books = Book.all
+      @books = Book.page(params[:page]).per(6)
       @user = current_user
       render 'index'
     end
