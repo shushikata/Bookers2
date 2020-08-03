@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
   
+
   get 'relationships/create'
   get 'relationships/destroy'
  root to: 'homes#top'
  
  get 'home/about', to: 'homes#about'
+
+ get 'search', to: 'search#search'
 
  devise_for :users
 
@@ -18,5 +21,5 @@ Rails.application.routes.draw do
   resource :favorites, only: [:create, :destroy]
   resources :comments, only: [:create, :destroy]
  end
- 
+
 end
