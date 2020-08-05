@@ -1,0 +1,53 @@
+
+<div class="container">
+  <div class="row">
+    <h2>Sign up</h2>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, autocomplete: "name" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :email %><br />
+        <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+      </div>
+
+
+      <%= f.label :postcode, 'Postal code' %><br>
+      <%= f.text_field :postcode, autocomplete: 'postcode' %><br>
+
+
+      <%= f.label :prefecture_name, 'Prefexture code' %><br>
+      <%= f.collection_select :prefecture_code, JpPrefecture::Prefecture.all, :code, :name %><br>
+
+      <%= f.label :address_city, 'City' %><br>
+      <%= f.text_field :address_city, autocomplete: 'address_city' %><br>
+
+      <%= f.label :address_street, 'Street' %><br>
+      <%= f.text_field :address_street, autocomplete: 'address_street' %><br>
+
+
+      <div class="field">
+        <%= f.label :password %>
+        <% if @minimum_password_length %>
+        <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %><br />
+        <%= f.password_field :password, autocomplete: "new-password" %>
+      </div>
+
+      <div class="field">
+        <%= f.label :password_confirmation %><br />
+        <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+      </div>
+
+      <div class="actions">
+        <%= f.submit "Sign up" %>
+      </div>
+    <% end %>
+
+    <%= render "devise/shared/links" %>
+  </div>
+</div>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bookers</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <header>
+      <div class="container">
+        <nav class="navbar-left">
+          <span>Bookers</span>
+        </nav>
+            <div class="navbar">
+              <% if user_signed_in? %>
+                <nav>
+                  <ul class="navbar-right">
+                    <li class="home">
+                      <%= link_to user_path(current_user), :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+                      <% end %>
+                    </li>
+                    <li class="users">
+                      <%= link_to users_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"> Users</span>
+                      <% end %>  
+                    </li>
+                    <li class="books">
+                      <%= link_to books_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-book" aria-hidden="true"> Books</span>
+                      <% end %>
+                    </li>
+                    <li class="logout">
+                      <%= link_to destroy_user_session_path, method: :delete, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-log-out" aria-hidden="true"> logout</span>
+                      <% end %>
+                    </li>
+                  </ul>
+                </nav>
+              <% else %>
+                <nav>
+                  <ul class="navbar-right">
+                    <li class="home">
+                      <%= link_to root_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-home" aria-hidden="true"> Home</span>
+                      <% end %>
+                    </li>
+                    <li class="about">
+                     
+                      <%= link_to home_about_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-link" aria-hidden="true"> About</span>
+                      <% end %>
+                    </li>
+                    <li class="signup">
+                      <%= link_to new_user_registration_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"> sign up</span>
+                      <% end %>
+                    </li>
+                    <li class="login">
+                      <%= link_to new_user_session_path, :style=>"color:#9d9d9d;" do %>
+                        <span class="glyphicon glyphicon-log-in" aria-hidden="true"> login</span>
+                      <% end %>
+                    </li>
+                  </ul>
+                </nav>
+              <% end %>
+            </div>  
+      </div>
+    </header>
+
+    <div class="nav-search">
+      <% if user_signed_in? %>
+        <%= form_tag(search_path, method: :get) do %>
+          <%= text_field_tag (:word) %>
+          <%= select_tag 'range' ,options_for_select([['User', '1'], ['Book', '2']]) %>
+          <%= select_tag 'search', options_for_select([["前方一致","forward_match"], ["後方一致","backward_match"], ["完全一致","perfect_match"], ["部分一致","partial_match"]]) %>
+          <%= submit_tag "検索" %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <%= yield %>
+    
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-3 col-xs-offset-9">
+            <div class="fixed-bottom">
+              <p>CopyRight Infratop.inc</p>
+            </div>
+          </div>
+        </div>
+      </div>  
+    </footer>
+  </body>
+</html>
