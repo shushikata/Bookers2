@@ -3,6 +3,17 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :correct_user, only:[:edit, :update]
 
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      log_in @user
+      UserNotifierMailer.send_signup_email(@user).deliver
+      redirect_to @user
+    else
+      render "homes/top"
+    end
+  end
+
   def index
     @users = User.all
     @user = current_user
@@ -43,7 +54,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :introduction, :profile_image)
+    params.require(:user).permit(:name, :introduction, :profile_image, :address_city)
   end
 
   def correct_user

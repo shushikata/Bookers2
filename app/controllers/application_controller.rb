@@ -26,9 +26,13 @@ class ApplicationController < ActionController::Base
       :prefecture_code,
       :address_city,
       :address_street,
+      :fruit_address, 
+      :latitude, 
+      :longitude
     ])
   end
 
+  
   protected
   
 end

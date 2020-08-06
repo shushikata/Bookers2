@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   validates :name, presence: true, length: { minimum:2, maximum:20 }
   validates :introduction, length: { maximum:50 }
+
+  
   
   # ====================自分がフォローしているユーザーとの関連 ===================================
   #フォローする側のUserから見て、フォローされる側のUserを(中間テーブルを介して)集める。なので親はfollowing_id(フォローする側)
@@ -57,5 +59,11 @@ class User < ApplicationRecord
   end
 
 
+  def fruit_address
+    "%s %s"%([self.prefecture_code,self.address_city,self.address_street])
+  end
+
+  geocoded_by :fruit_address
+  after_validation :geocode
 
 end
