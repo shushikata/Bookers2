@@ -3,6 +3,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+
+  # mailer関連
+  after_create :send_welcome_mail
+ 
+  def send_welcome_mail
+    UserMailer.user_welcome_mail(self).deliver
+  end
+
   has_many :books, dependent: :destroy 
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
