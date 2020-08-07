@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
 
-
   def index
     @user = User.find(params[:user_id])
     send_ids = current_user.messages.where(receive_user_id: @user.id).pluck(:id)
