@@ -25,9 +25,9 @@
       <td>
         <% if current_user != user %>
           <% if user.followed_by?(current_user) %>
-              <p><%=link_to "フォロー", user_relationships_path(user.id), method: :delete, class:"btn btn-primary" %></p>
+              <p><%=link_to "フォロー中", user_relationships_path(user.id), method: :delete, class:"btn btn-primary" %></p>
           <% else %>
-              <p><%=link_to "フォロー", user_relationships_path(user.id), method: :post, class:"btn btn-default" %></p>
+              <p><%=link_to "フォローする", user_relationships_path(user.id), method: :post, class:"btn btn-default" %></p>
           <% end %>
         <% end %>
       </td>
@@ -45,6 +45,12 @@
     <% end %>
   <% end %>
 
+  <% if current_user != user %>
+    <%= link_to user_messages_path(user), class:"btn btn-default btn-block" do %>
+      <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+    <% end %>
+  <% end %>
+  
   <h1>New book</h1>
   <%= form_for(book) do |f| %> 
     <label for="booktitle">Title</label><br>

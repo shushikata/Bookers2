@@ -1,21 +1,27 @@
 Rails.application.routes.draw do
   
 
+  get 'messages/index'
+  get 'messages/create'
+  get 'messages/destroy'
   get 'relationships/create'
   get 'relationships/destroy'
- root to: 'homes#top'
- 
- get 'home/about', to: 'homes#about'
+  root to: 'homes#top'
+  
+  get 'home/about', to: 'homes#about'
 
- get 'search', to: 'search#search'
+  get 'search', to: 'search#search'
 
- devise_for :users
+  devise_for :users
 
- resources :users do
-  resource :relationships, only: [:create, :destroy]
-  get :follows, on: :member 
-  get :followers, on: :member
- end 
+  resources :users do
+    resources :messages, only: [:index, :create, :destroy]
+    resource :relationships, only: [:create, :destroy]
+    member do
+      get :follows
+      get :followers
+    end
+  end 
 
  resources :books, except: [:new] do
   resource :favorites, only: [:create, :destroy]

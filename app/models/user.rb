@@ -6,6 +6,21 @@ class User < ApplicationRecord
   has_many :books, dependent: :destroy 
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
+
+  # DM関連　===========================================================================
+    has_many :messages
+    has_many :sent_messages, through: :messages, source: :receive_user
+    has_many :reverses_of_message, class_name: 'Message', foreign_key: 'receive_user_id'
+    has_many :received_messages, through: :reverses_of_message, source: :user
+
+    # メッセージを送るためのメソッド
+    def sent_messages(other_user, content)
+      unless self == other_user
+        self.messages.find_or_create_by(receive_user_id: other_user.id, content: content)
+      end
+    end
+  # ==================================================================================
+
   
   attachment :profile_image
 
@@ -47,6 +62,7 @@ class User < ApplicationRecord
     end
   end
 
+  # 住所自動入力関連 ===================================================================
   include JpPrefecture
   jp_prefecture :prefecture_code
 
@@ -57,13 +73,15 @@ class User < ApplicationRecord
   def prefecture_name=(prefecture_name)
     self.prefecture_code = JpPrefecture::Prefecture.find(name: prefecture_name).code
   end
+  # ==================================================================================
 
 
+  # API関連 =================================================================
   def fruit_address
     "%s %s"%([self.prefecture_code,self.address_city,self.address_street])
   end
-
   geocoded_by :fruit_address
   after_validation :geocode
+  # ========================================================================
 
 end
