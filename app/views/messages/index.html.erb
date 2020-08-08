@@ -1,27 +1,16 @@
 
 <h2><%= @user.name %> さんとのメッセージ一覧</h2>
 
-<% user = User.find_by(id: @message.receive_user_id) %>
-<% @messages.each do |message| %>
-  <div>
-    <div class="media-left">
-      <%= attachment_image_tag message.user, :profile_image, size: "50", format: 'jpeg', fallback: "no_image.jpg", class: "media-object img-circle" %>
-    </div>
-    <div class="media-body">
-      <div>
-        <%= link_to message.user.name, user_path(message.user) %> 
-        <span class="text-muted">posted at <%= message.created_at %></span>
-      </div>
-      <div>
-        <%= message.content %><br>
-        <% if current_user == message.user %>
-          <%= link_to "削除", user_message_path(current_user, message), method: :delete, data: { confirm: "You sure?" }, class: 'btn btn-danger btn-xs' %>
-        <% end %>
-      </div>
-    </div>
-    <hr>
-  </div>
+
+
+<div class="messages">
+  <%= render 'messages/messages', messages: @messages %>
+</div>
+  
+<%# あとでlocal: trueを書き換える　%>
+<%= form_with model: @message, :url => {:action => :create}, remote: true do |f| %>
+  <%= f.text_area :content %><br>
+  <%= f.submit '送信' %>
 <% end %>
 
-<%= render 'messages/form', message: @message %>
 <%= link_to "Homeへ戻る", user_path(current_user) %>

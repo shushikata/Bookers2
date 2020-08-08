@@ -13,11 +13,14 @@ class MessagesController < ApplicationController
     @message = current_user.messages.build(message_params)
     @message.receive_user_id = @user.id
     if @message.save
+      send_ids = current_user.messages.where(receive_user_id: @user.id).pluck(:id)
+      receive_ids = @user.messages.where(receive_user_id: current_user.id).pluck(:id)
+      @messages = Message.where(id: send_ids + receive_ids).order(created_at: :desc)
       flash[:success] = 'メッセージを送信しました。'
-      redirect_back(fallback_location: root_path)
+      # redirect_back(fallback_location: root_path)
     else
       flash[:danger] = 'メッセージを送信できませんでした。'
-      redirect_back(fallback_location: root_path)
+      # redirect_back(fallback_location: root_path)
     end
   end
 
@@ -31,7 +34,7 @@ class MessagesController < ApplicationController
   private
 
   def message_params
-  params.require(:message).permit(:content)
+  params.require(:message).permit(:content, :user_id, :receive_user_id)
   end
 
 end

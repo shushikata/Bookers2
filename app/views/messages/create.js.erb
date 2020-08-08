@@ -1,0 +1,3 @@
+$("textarea").val("");
+$("input").val(""); 
+$(".messages").html("<%= j(render partial: 'messages/messages', locals: {messages: @messages}) %>");

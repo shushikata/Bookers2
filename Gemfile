@@ -73,3 +73,5 @@ gem 'kaminari'
 gem 'jp_prefecture'
 
 gem 'geocoder'
+
+gem "dotenv-rails"

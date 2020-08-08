@@ -4,18 +4,19 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
 
-  # mailer関連
+  # mailer関連 ========================================
   after_create :send_welcome_mail
  
   def send_welcome_mail
     UserMailer.user_welcome_mail(self).deliver
   end
+  # ===================================================
 
   has_many :books, dependent: :destroy 
   has_many :comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
 
-  # DM関連　===========================================================================
+  # DM関連 ===========================================================================
     has_many :messages
     has_many :sent_messages, through: :messages, source: :receive_user
     has_many :reverses_of_message, class_name: 'Message', foreign_key: 'receive_user_id'
@@ -85,11 +86,13 @@ class User < ApplicationRecord
 
 
   # API関連 =================================================================
-  def fruit_address
-    "%s %s"%([self.prefecture_code,self.address_city,self.address_street])
+  def address
+    "%s %s"%([self.prefecture_code, self.address_city, self.address_street])
   end
-  geocoded_by :fruit_address
+  
+  geocoded_by :address
   after_validation :geocode
+
   # ========================================================================
 
 end
