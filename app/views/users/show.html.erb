@@ -45,7 +45,7 @@
       // #latitude,longitudeから位置を特定
       var test ={lat: <%= @user.latitude %>, lng: <%= @user.longitude %>};
       var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 18, 
+                zoom: 15, 
                 center: test
                 });
       var transitLayer = new google.maps.TransitLayer();
